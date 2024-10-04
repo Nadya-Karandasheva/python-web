@@ -21,7 +21,4 @@
     - Настройка MkDocs
     - Сборка
     - Развертывание ( с параметром *mkdocs gh-deploy --force*)
-
-#### Если не работает:
- - создать secrets среды и репозитория
- - добавить  для actions.yml следующие разрешения: permissions: contents: write pages: write
+5. добавить  для actions.yml следующие разрешения: permissions: contents: write pages: write
