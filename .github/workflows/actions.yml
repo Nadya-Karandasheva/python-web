@@ -1,0 +1,35 @@
+name: Build and Deploy of Static Site
+
+on:
+  push:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: MkDocs Setup
+        run: pip install mkdocs
+
+      - name: Build
+        run: mkdocs build --clean
+
+      - name: Deploy
+        run: mkdocs gh-deploy --force
+        env:
+          REPO_KEY: ${{ secrets.ACTIONS_TOKEN }}
+          CONFIG_FILE: mkdocs.yml
+          USERNAME: github-actions[bot]
