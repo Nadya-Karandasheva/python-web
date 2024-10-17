@@ -40,7 +40,7 @@ jobs:
         rjsmin < overrides/js/extra.js > overrides/js/extra.min.js
 
     - name: MkDocs Setup
-        run: pip install mkdocs
+      run: pip install mkdocs
 
     - name: Build
       run: mkdocs build --clean
