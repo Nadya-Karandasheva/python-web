@@ -9,25 +9,43 @@ permissions:
 
 jobs:
   build:
-    name: Build and Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Python Setup
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
 
-      - name: MkDocs Setup
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mkdocs mkdocs-material
+
+    - name: Lint HTML files
+      run: |
+        pip install html-linter
+        html_linter docs
+
+    - name: Minify CSS
+      run: |
+        pip install csscompressor
+        csscompressor --input overrides/css/extra.css --output overrides/css/extra.min.css
+
+    - name: Minify JavaScript
+      run: |
+        pip install rjsmin
+        rjsmin < overrides/js/extra.js > overrides/js/extra.min.js
+
+    - name: MkDocs Setup
         run: pip install mkdocs
 
-      - name: Build
-        run: mkdocs build --clean
+    - name: Build
+      run: mkdocs build --clean
 
-      - name: Deploy
+    - name: Deploy
         run: mkdocs gh-deploy --force
         env:
           REPO_KEY: ${{ secrets.ACTIONS_TOKEN }}
