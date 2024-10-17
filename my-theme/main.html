@@ -2,6 +2,11 @@
 <html>
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Description of custom site" />
+  <meta name="keywords" content="HTML, CSS, JavaScript" />
+  <meta name="author" content="Karandasheva Nadya" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
   {%- for path in config.extra_css %}
   <link href="{{ path | url }}" rel="stylesheet">
